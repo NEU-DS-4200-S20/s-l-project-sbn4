@@ -19,34 +19,6 @@ h1, h2, h3 {
 .vis-holder {
   width: 100%;
   height: 100%;
-  display: flex;
-}
-
-/* The line chart will take the left half of the screen */
-.linechart-holder {
-  flex: 0 0 50%;
-}
-
-/* The scatterplot will take the right half of the screen */
-.scatterplot-holder {
-  flex: 1;  
-}
-
-/* Default style for marks and channels used */
-.point {
-  fill: white;
-  stroke: #69b3a2;
-  stroke-width: 3;
-}
-
-.linePath {
-  fill: none;
-  stroke: black;
-  stroke-width: 1.5;
-}
-
-.axisLabel {
-  fill: #475d7c;
 }
 
 /* Style for selected marks (circles) */
@@ -132,7 +104,7 @@ th.mouseover.selected{
 }
 @media screen and (min-width:1000px){
 	#forkongithub{
-		position:absolute;
+		position:fixed;
 		display:block;
 		top:0;
 		right:0;
