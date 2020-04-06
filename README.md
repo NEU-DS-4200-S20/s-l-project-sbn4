@@ -4,7 +4,7 @@ This template will help you get started with your project. Please look through a
 
 ## The GitHub Pages Website
 
-Make sure you publish your project to github pages, and put the URL here: 
+Make sure you publish your project to github pages, and put the URL here: https://neu-ds-4200-s20.github.io/s-l-project-sbn4/
 
 ## Setup
 
