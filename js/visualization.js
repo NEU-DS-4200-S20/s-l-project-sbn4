@@ -1,8 +1,8 @@
 // Immediately Invoked Function Expression to limit access to our 
 // variables and prevent 
-((() => {
+function createTable(data, filterValue) {
 
-  d3.csv("data/member_data.csv", (data) => {
+  d3.csv(data, (data) => {
       
   
       // General event type for selections, used by d3-dispatch
@@ -38,11 +38,19 @@
       // Create a table given the following: 
       // a dispatcher (d3-dispatch) for selection events; 
       // a div id selector to put our table in; and the data to use.
-      
       let tableData = table()
         .selectionDispatcher(d3.dispatch(dispatchString))
-        ("#table", data);
+        ("#table", filter(data, filterValue));
   
+      function filter(data, filterValue) {
+        if (filterValue != "All") {
+          return data.filter(row => row.Member_Type == filterValue);
+        }
+        else {
+          return data;
+        }
+      };
+
       // // When the line chart selection is updated via brushing, 
       // // tell the scatterplot to update it's selection (linking)
       // lcYearPoverty.selectionDispatcher().on(dispatchString, function(selectedData) {
@@ -65,7 +73,66 @@
       //   lcYearPoverty.updateSelection(selectedData);
       //   spUnemployMurder.updateSelection(selectedData);
       // });
-      
+    return tableData;
     });
-  
-  })());
+  };
+
+  function updateTable(table, name) {
+    const dispatchString = "selectionUpdated";
+    return createTable("data/Member_Data.csv", name);
+  };
+
+  function updateTableV2(name) {
+    const dispatchString = "selectionUpdated";
+    
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tbody")[0].rows;
+    
+    if (name != "All") {
+    // Loop through all table rows, and hide those who don't match the search query
+      for (i = 0; i < tr.length; i++) {
+        text = tr[i].cells[1].innerText;
+        if (text == name) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+    else {
+      for (i = 0; i < tr.length; i++) {
+        tr[i].style.display = "";
+      }
+    }
+  }
+
+  function addFilter(name) {
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tbody")[0].rows;
+
+    for (i = 0; i < tr.length; i++) {
+      text = tr[i].cells[1].innerText
+      if (tr[i].style.display == "") {
+      } 
+      else if (text == name) {
+        tr[i].style.display = "";
+      }
+      else {
+        tr[i].style.display = "none";
+      }
+    }
+  }
+
+  function removeFilter(name) {
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tbody")[0].rows;
+
+    for (i = 0; i < tr.length; i++) {
+      text = tr[i].cells[1].innerText
+      if (tr[i].style.display == "" && text == name) {
+        tr[i].style.display = "none";
+      } 
+    }
+  }
+
+tableD = createTable("data/Member_Data.csv", "All");
