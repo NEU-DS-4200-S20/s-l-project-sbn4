@@ -41,11 +41,28 @@ table {
   border-spacing: 0 0;
   text-align: left;
   margin: 0 auto;
+  padding: 0 px;
 }
 
 th, td, tr {
   /* vertical | horizontal */
   padding: 0 8px;
+}
+
+tr {
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+  }
+
+thead,
+tbody {
+  display: block;
+}
+
+tbody {
+  max-height: 500px;
+  overflow: auto;
 }
 
 /* Don't also do text drag selection */
