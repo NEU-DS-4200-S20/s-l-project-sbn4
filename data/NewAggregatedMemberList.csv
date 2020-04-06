@@ -1,0 +1,18 @@
+name,parent,value
+btype,,
+Caterer,btype,4
+Commercial Service,btype,9
+Consulting,btype,5
+Consumer Product,btype,4
+Consumer Service,btype,5
+Energy and Utilities,btype,3
+Financial Service,btype,9
+Food Delivery Service,btype,3
+Food Product,btype,28
+Food Product - Beverage,btype,4
+Fresh Food Producer,btype,7
+Health Service,btype,3
+Hotel/Housing,btype,1
+Legal Service,btype,1
+Marketing,btype,3
+Restaurant/Cafe,btype,11
