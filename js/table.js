@@ -7,6 +7,7 @@ function table() {
     let ourBrush = null,
       selectableElements = d3.select(null),
       dispatcher;
+    
   
     // Create the chart by adding an svg to the div with the id 
     // specified by the selector using the given data
@@ -20,6 +21,8 @@ function table() {
       // Here, we grab the labels of the first item in the dataset
       //  and store them as the headers of the table.
       let tableHeaders = Object.keys(data[0]);
+
+      table.classed("text-unselectable", true);
   
       // You should append these headers to the <table> element as <th> objects inside
       // a <th>
