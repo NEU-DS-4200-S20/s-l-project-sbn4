@@ -37,15 +37,15 @@ const toolTip = d3
         .attr("class", "tooltip")
         .style("opacity", 0);
 
+var mouseDown = false;
+
 // use this information to add rectangles:
 const cell = svg.selectAll('g')
             .data(root.leaves())
             .enter()
             .append('g')
             .attr('transform', d => `translate(${d.x0},${d.y0})`)
-            .on('mousedown', function(d) {
-              console.log(d.data.name)
-            })
+            .on('mousedown', select)
             .on('mousemove', d => {
               toolTip.transition()
                       .duration(200)
@@ -74,6 +74,27 @@ const cell = svg.selectAll('g')
           .attr('width', d => d.x1 - d.x0)
           .attr('height', d => d.y1 - d.y0)
           .attr('fill', d => { return color(d.data.name)});
+
+
+      function select() {
+        if (!mouseDown) {
+          cell.selectAll(".selected").attr("class", "")
+          d3.select(this).attr("class", "mouseover selected");
+          d3.select(this).attr("fill", "white");
+          mouseDown = true;
+          console.log(d3.select(this).attr("class", "mouseover selected"));
+          console.log(mouseDown);
+        }
+        else {
+          console.log('poo')
+          d3.select(this).attr('fill', 'black');
+          mouseDown = false;
+        }
+      }
+      function deselect() {
+        mouseDown = false;
+
+      }
 
       cell.append('text')
           .selectAll('tspan')
