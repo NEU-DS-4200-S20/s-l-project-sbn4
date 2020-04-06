@@ -19,6 +19,83 @@ h1, h2, h3 {
 .vis-holder {
   width: 100%;
   height: 100%;
+  display: flex;
+}
+
+/* The line chart will take the left half of the screen */
+.linechart-holder {
+  flex: 0 0 50%;
+}
+
+/* The scatterplot will take the right half of the screen */
+.scatterplot-holder {
+  flex: 1;  
+}
+
+/* Default style for marks and channels used */
+.point {
+  fill: white;
+  stroke: #69b3a2;
+  stroke-width: 3;
+}
+
+.linePath {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.5;
+}
+
+.axisLabel {
+  fill: #475d7c;
+}
+
+/* Style for selected marks (circles) */
+circle.selected {
+  fill: pink;
+  stroke: red;
+  opacity: 5;
+}
+
+/* Style for selected marks (table rows) */
+tr.selected {
+  background-color: pink;
+}
+
+/* Pretty table layout */
+table {
+  font-size: 14px;
+  border-collapse: separate;
+  /* vertical | horizontal */
+  border-spacing: 0 0;
+  text-align: right;
+  margin: 0 auto;
+}
+
+th, td, tr {
+  /* vertical | horizontal */
+  padding: 0 8px;
+}
+
+/* Don't also do text drag selection */
+table.text-unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  cursor: default;
+}
+
+/* Recreate the D3 brush style... */
+th.mouseover {
+  background-color: #d6d6d6;
+}
+
+/* ...but add a darker selected and brushed color. */
+th.mouseover.selected{
+  background-color: #e08fa3;
 }
 
 /* Fork on GitHub ribbon via https://codepo8.github.io/css-fork-on-github-ribbon/# */  
@@ -55,7 +132,7 @@ h1, h2, h3 {
 }
 @media screen and (min-width:1000px){
 	#forkongithub{
-		position:fixed;
+		position:absolute;
 		display:block;
 		top:0;
 		right:0;
