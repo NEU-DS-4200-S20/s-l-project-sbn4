@@ -135,7 +135,7 @@ function createTable(data, filterValue) {
     }
   }
 
-tableD = createTable("data/Member_Data.csv", "All");
+tableD = createTable("data/member_data.csv", "All");
 
 
 
