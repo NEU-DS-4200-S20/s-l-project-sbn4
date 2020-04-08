@@ -6,11 +6,11 @@ height = 400 - margin.top - margin.bottom;
 // append the svg object to the body of the page
 var svg = d3.select("#vis-svg")
 .append("svg")
-.attr("width", width + margin.left + margin.right)
+.attr("width", 3.5 * width + margin.left + margin.right)
 .attr("height", height + margin.top + margin.bottom)
 .append("g")
 .attr("transform",
-  "translate(" + margin.left + "," + margin.top + ")");
+  "translate(" + 2.5 * width + "," + margin.top + ")");
 
 // Read data
 d3.csv('data/NewAggregatedMemberList.csv', function(data) {
@@ -32,7 +32,7 @@ d3.treemap()
 console.log(root.leaves())
 
 const toolTip = d3
-        .select("#vis-svg")
+        .select("#treemap-holder")
         .append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);

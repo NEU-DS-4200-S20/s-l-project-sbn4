@@ -20,6 +20,17 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="msapplication-config" content="favicons/browserconfig.xml">
   <meta name="theme-color" content="#ffffff">
+
+  <style type="text/css">
+    #map {
+      width: 615px;
+      height: 375px;
+    }
+    .town {
+        fill: #ccc;
+    }
+  </style>
+
 </head>
 
 <!-- Main page content -->
@@ -56,9 +67,9 @@
     <!-- Change viewbox to whatever you want, e.g. "0 0 1000 6000" This determines your aspect ratio and coordinate system -->    
     <!-- Delete all the sample SVG code below after the viewbox to before the closing tag. Populate this part of the SVG with D3. -->
     <svg id="vis-svg"
-      preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 400 400" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      preserveAspectRatio="xMidYMid meet" class="marks" viewBox="0 0 1500 500" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Don't delete the closing tag! -->
-    <div class="treemap-holder" id="treemap"></div>
+    <div class="treemap-holder" align="right" id="treemap"></div>
     </svg>
     <div class="table-holder" id="table"></div>
   </div>
@@ -117,6 +128,10 @@
   <script src="js/visualization.js"></script>
   <script src="js/treemap.js"></script>
   <script src="js/table.js"></script>
+  <script src="https://d3js.org/topojson.v1.js"></script>
   <script src="https://d3js.org/d3.v4.js"></script>
+  <script src="js/map.js"></script>
+  <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+  <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 </body>
 </html>
