@@ -80,13 +80,16 @@ d3.csv("data/AggregatedZipData.csv", function(data){
         console.log(mouseDownMap);
         console.log(mouseDownCellMap);
 
+        treemapFilters = getTreemapFilters();
+        console.log(treemapFilters);
+
         if (!mouseDownMap && mouseDownCellMap.length == 0) {
           areas.selectAll(".selected").attr("class", "")
           d3.select(this).attr("class", "mouseover selected");
           d3.select(this).attr("fill", "yellow");
           mouseDownMap = true;
           mouseDownCellMap.push(selectedZip);
-          tableD = updateTableV2(selectedZip, true);
+          tableD = updateTableV2(treemapFilters, mouseDownCellMap);
           console.log(1);
         }
         else if (mouseDownMap && mouseDownCellMap.indexOf(selectedZip) > -1) {
@@ -97,19 +100,20 @@ d3.csv("data/AggregatedZipData.csv", function(data){
           }
           if (mouseDownCellMap.length == 0) {
             mouseDownMap = false;
-            tableD = updateTableV2("All", true);
+            mouseDownCellMap = new Array();
+            tableD = updateTableV2(treemapFilters, mouseDownCellMap);
             d3.select(this).attr("fill", "black");
           }
           else {
           d3.select(this).attr("fill", "black");
-          tableD = removeFilter(selectedZip, true);
+          tableD = updateTableV2(treemapFilters, mouseDownCellMap);
           }
         }
         else if (mouseDownMap && !(mouseDownCellMap.indexOf(selectedZip) > -1)) {
           console.log(3);
           d3.select(this).attr("fill", "yellow");
-          tableD = addFilter(selectedZip, true);
           mouseDownCellMap.push(selectedZip);
+          tableD = updateTableV2(treemapFilters, mouseDownCellMap);
         }
         else {
           console.log(4);
@@ -117,14 +121,18 @@ d3.csv("data/AggregatedZipData.csv", function(data){
           d3.select(this).attr("class", "mouseover selected");
           d3.select(this).attr("fill", "yellow");
           mouseDownMap = true;
-          mouseDownCellMap = selectedZip;
-          tableD = updateTableV2(selectedZip, true);
+          mouseDownCellMap = new Array().push(selectedZip);
+          tableD = updateTableV2(treemapFilters, mouseDownCellMap);
         }
 
         if (mouseDownMap && mouseDownCellMap.length == 0) {
             mouseDownMap = false;
+            mouseDownCellMap = new Array();
         }
       }
     
 })});
 
+function getMapFilters() {
+    return mouseDownCellMap;
+}

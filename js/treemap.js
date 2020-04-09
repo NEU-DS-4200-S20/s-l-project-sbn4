@@ -3,6 +3,9 @@ var margin = {top: 10, right: 10, bottom: 10, left: 10},
 width = 400 - margin.left - margin.right,
 height = 400 - margin.top - margin.bottom;
 
+var mouseDown = false;
+var mouseDownCell = new Array();
+
 // append the svg object to the body of the page
 var svg = d3.select("#vis-svg")
 .append("svg")
@@ -37,8 +40,7 @@ const toolTip = d3
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-var mouseDown = false;
-var mouseDownCell = new Array();
+
 
 // use this information to add rectangles:
 const cell = svg.selectAll('g')
@@ -78,7 +80,9 @@ const cell = svg.selectAll('g')
 
 
       function select() {
-        selectedType = d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name
+        selectedType = d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name;
+        mapFilters = getMapFilters();
+        console.log(selectedType);
 
         if (!mouseDown && mouseDownCell.length == 0) {
           cell.selectAll(".selected").attr("class", "")
@@ -86,7 +90,8 @@ const cell = svg.selectAll('g')
           d3.select(this).attr("fill", "white");
           mouseDown = true;
           mouseDownCell.push(selectedType);
-          tableD = updateTableV2(selectedType, false);
+          console.log(mouseDownCell);
+          tableD = updateTableV2(mouseDownCell, mapFilters);
           console.log(mouseDown);
         }
         else if (mouseDown && mouseDownCell.indexOf(selectedType) > -1) {
@@ -96,33 +101,38 @@ const cell = svg.selectAll('g')
           }
           if (mouseDownCell.length == 0) {
             mouseDown = false;
-            tableD = updateTableV2("All", false);
+            mouseDownCell = new Array();
+            tableD = updateTableV2(mouseDownCell, mapFilters);
             d3.select(this).attr("fill", "black");
           }
           else {
-          d3.select(this).attr("fill", "black");
-          tableD = removeFilter(selectedType, false);
+            d3.select(this).attr("fill", "black");
+            tableD = updateTableV2(mouseDownCell, mapFilters);
           }
         }
         else if (mouseDown && !(selectedType > -1)) {
           d3.select(this).attr("fill", "white");
-          tableD = addFilter(selectedType, false);
           mouseDownCell.push(selectedType);
+          tableD = updateTableV2(mouseDownCell, mapFilters);
         }
         else {
           cell.selectAll(".selected").attr("class", "");
           d3.select(this).attr("class", "mouseover selected");
           d3.select(this).attr("fill", "white");
           mouseDown = true;
-          mouseDownCell = selectedType;
-          tableD = updateTableV2(selectedType, false);
+          mouseDownCell = new Array().push(selectedType);
+          tableD = updateTableV2(mouseDownCell, mapFilters);
           console.log(mouseDown);
+        }
+
+        if (mouseDown && mouseDownCell.length == 0) {
+          mouseDown = false;
+          mouseDownCell = new Array();
         }
       }
 
       function deselect() {
         mouseDown = false;
-
       }
 
       cell.append('text')
@@ -149,7 +159,9 @@ const cell = svg.selectAll('g')
           .text(d => d);
           });
 
-          function norm2(x, y) { return x * x + y * y; }
-          color = d3.scaleOrdinal(d3.schemeCategory10)
+function norm2(x, y) { return x * x + y * y; }
+  color = d3.scaleOrdinal(d3.schemeCategory10)
           
-
+function getTreemapFilters() {
+  return mouseDownCell;
+}

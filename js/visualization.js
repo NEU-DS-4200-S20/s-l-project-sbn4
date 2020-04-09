@@ -82,79 +82,52 @@ function createTable(data, filterValue) {
     return createTable("data/Member_Data.csv", name);
   };
 
-  function updateTableV2(name, zipHuh) {
+  function updateTableV2(treemapFilters, mapFilters) {
     const dispatchString = "selectionUpdated";
-
-    if (zipHuh) {
-      var column = 3;
-    }
-    else {
-      var column = 0;
-    }
     
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tbody")[0].rows;
-    
-    if (name != "All") {
-    // Loop through all table rows, and hide those who don't match the search query
+
+    if (treemapFilters.length == 0 && mapFilters.length == 0) {
       for (i = 0; i < tr.length; i++) {
-        text = tr[i].cells[column].innerText;
-        if (text == name) {
+        tr[i].style.display = "";
+      }
+    }
+    else if (treemapFilters.length == 0) {
+      for (i = 0; i < tr.length; i++) {
+        zip = tr[i].cells[3].innerText;
+        if (mapFilters.indexOf(zip) > -1) {
           tr[i].style.display = "";
-        } else {
+        } 
+        else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+    else if (mapFilters.length == 0) {
+      for (i = 0; i < tr.length; i++) {
+        bType = tr[i].cells[0].innerText;
+        if (treemapFilters.indexOf(bType) > -1) {
+          tr[i].style.display = "";
+        } 
+        else {
           tr[i].style.display = "none";
         }
       }
     }
     else {
       for (i = 0; i < tr.length; i++) {
-        tr[i].style.display = "";
+        bType = tr[i].cells[0].innerText;
+        zip = tr[i].cells[3].innerText;
+        if (mapFilters.indexOf(zip) > -1 && treemapFilters.indexOf(bType) > -1) {
+          tr[i].style.display = "";
+        } 
+        else {
+          tr[i].style.display = "none";
+        }
       }
     }
-  }
-
-  function addFilter(name, zipHuh) {
-    table = document.getElementById("table");
-    tr = table.getElementsByTagName("tbody")[0].rows;
-
-    if (zipHuh) {
-      var column = 3;
-    }
-    else {
-      var column = 0;
-    }
-
-    for (i = 0; i < tr.length; i++) {
-      text = tr[i].cells[column].innerText
-      if (tr[i].style.display == "") {
-      } 
-      else if (text == name) {
-        tr[i].style.display = "";
-      }
-      else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-
-  function removeFilter(name, zipHuh) {
-    table = document.getElementById("table");
-    tr = table.getElementsByTagName("tbody")[0].rows;
-
-    if (zipHuh) {
-      var column = 3;
-    }
-    else {
-      var column = 0;
-    }
-
-    for (i = 0; i < tr.length; i++) {
-      text = tr[i].cells[column].innerText
-      if (tr[i].style.display == "" && text == name) {
-        tr[i].style.display = "none";
-      } 
-    }
-  }
+  };
 
 tableD = createTable("data/member_data.csv", "All");
 
