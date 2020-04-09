@@ -78,42 +78,44 @@ const cell = svg.selectAll('g')
 
 
       function select() {
+        selectedType = d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name
+
         if (!mouseDown && mouseDownCell.length == 0) {
           cell.selectAll(".selected").attr("class", "")
           d3.select(this).attr("class", "mouseover selected");
           d3.select(this).attr("fill", "white");
           mouseDown = true;
-          mouseDownCell.push(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name);
-          tableD = updateTableV2(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name);
+          mouseDownCell.push(selectedType);
+          tableD = updateTableV2(selectedType, false);
           console.log(mouseDown);
         }
-        else if (mouseDown && mouseDownCell.indexOf(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name) > -1) {
-          index = mouseDownCell.indexOf(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name);
+        else if (mouseDown && mouseDownCell.indexOf(selectedType) > -1) {
+          index = mouseDownCell.indexOf(selectedType);
           if (index > -1) {
             mouseDownCell.splice(index, 1);
           }
           if (mouseDownCell.length == 0) {
             mouseDown = false;
-            tableD = updateTableV2("All");
+            tableD = updateTableV2("All", false);
             d3.select(this).attr("fill", "black");
           }
           else {
           d3.select(this).attr("fill", "black");
-          tableD = removeFilter(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name);
+          tableD = removeFilter(selectedType, false);
           }
         }
-        else if (mouseDown && !(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name > -1)) {
+        else if (mouseDown && !(selectedType > -1)) {
           d3.select(this).attr("fill", "white");
-          tableD = addFilter(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name);
-          mouseDownCell.push(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name);
+          tableD = addFilter(selectedType, false);
+          mouseDownCell.push(selectedType);
         }
         else {
           cell.selectAll(".selected").attr("class", "");
           d3.select(this).attr("class", "mouseover selected");
           d3.select(this).attr("fill", "white");
           mouseDown = true;
-          mouseDownCell = d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name;
-          tableD = updateTableV2(d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name);
+          mouseDownCell = selectedType;
+          tableD = updateTableV2(selectedType, false);
           console.log(mouseDown);
         }
       }

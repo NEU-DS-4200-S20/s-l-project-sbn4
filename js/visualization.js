@@ -82,8 +82,15 @@ function createTable(data, filterValue) {
     return createTable("data/Member_Data.csv", name);
   };
 
-  function updateTableV2(name) {
+  function updateTableV2(name, zipHuh) {
     const dispatchString = "selectionUpdated";
+
+    if (zipHuh) {
+      var column = 3;
+    }
+    else {
+      var column = 0;
+    }
     
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tbody")[0].rows;
@@ -91,7 +98,7 @@ function createTable(data, filterValue) {
     if (name != "All") {
     // Loop through all table rows, and hide those who don't match the search query
       for (i = 0; i < tr.length; i++) {
-        text = tr[i].cells[0].innerText;
+        text = tr[i].cells[column].innerText;
         if (text == name) {
           tr[i].style.display = "";
         } else {
@@ -106,12 +113,19 @@ function createTable(data, filterValue) {
     }
   }
 
-  function addFilter(name) {
+  function addFilter(name, zipHuh) {
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tbody")[0].rows;
 
+    if (zipHuh) {
+      var column = 3;
+    }
+    else {
+      var column = 0;
+    }
+
     for (i = 0; i < tr.length; i++) {
-      text = tr[i].cells[0].innerText
+      text = tr[i].cells[column].innerText
       if (tr[i].style.display == "") {
       } 
       else if (text == name) {
@@ -123,12 +137,19 @@ function createTable(data, filterValue) {
     }
   }
 
-  function removeFilter(name) {
+  function removeFilter(name, zipHuh) {
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tbody")[0].rows;
 
+    if (zipHuh) {
+      var column = 3;
+    }
+    else {
+      var column = 0;
+    }
+
     for (i = 0; i < tr.length; i++) {
-      text = tr[i].cells[0].innerText
+      text = tr[i].cells[column].innerText
       if (tr[i].style.display == "" && text == name) {
         tr[i].style.display = "none";
       } 
