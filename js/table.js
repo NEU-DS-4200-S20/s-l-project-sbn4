@@ -67,7 +67,6 @@ function table() {
   
       function highlight() {
         if (d3.select(this).attr("class") === "selected") {
-          console.log('poop')
           d3.select(this).attr("class", "");
           d3.select(this).attr("class", "selected");
         } else {
@@ -86,7 +85,6 @@ function table() {
       }
   
       function select() {
-        console.log('uh')
         let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
         if (!mouseDown) {
           table.selectAll(".selected").attr("class", "")
