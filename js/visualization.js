@@ -1,8 +1,8 @@
 // Immediately Invoked Function Expression to limit access to our 
 // variables and prevent 
-((() => {
+function createTable(data, filterValue) {
 
-  d3.csv("data/member_data.csv", (data) => {
+  d3.csv(data, (data) => {
       
   
       // General event type for selections, used by d3-dispatch
@@ -38,11 +38,19 @@
       // Create a table given the following: 
       // a dispatcher (d3-dispatch) for selection events; 
       // a div id selector to put our table in; and the data to use.
-      
       let tableData = table()
         .selectionDispatcher(d3.dispatch(dispatchString))
-        ("#table", data);
+        ("#table", filter(data, filterValue));
   
+      function filter(data, filterValue) {
+        if (filterValue != "All") {
+          return data.filter(row => row.Member_Type == filterValue);
+        }
+        else {
+          return data;
+        }
+      };
+
       // // When the line chart selection is updated via brushing, 
       // // tell the scatterplot to update it's selection (linking)
       // lcYearPoverty.selectionDispatcher().on(dispatchString, function(selectedData) {
@@ -65,7 +73,65 @@
       //   lcYearPoverty.updateSelection(selectedData);
       //   spUnemployMurder.updateSelection(selectedData);
       // });
-      
+    return tableData;
     });
-  
-  })());
+  };
+
+  function updateTable(table, name) {
+    const dispatchString = "selectionUpdated";
+    return createTable("data/Member_Data.csv", name);
+  };
+
+  function updateTableV2(treemapFilters, mapFilters) {
+    const dispatchString = "selectionUpdated";
+    
+    table = document.getElementById("table");
+    tr = table.getElementsByTagName("tbody")[0].rows;
+
+    if (treemapFilters.length == 0 && mapFilters.length == 0) {
+      for (i = 0; i < tr.length; i++) {
+        tr[i].style.display = "";
+      }
+    }
+    else if (treemapFilters.length == 0) {
+      for (i = 0; i < tr.length; i++) {
+        zip = tr[i].cells[3].innerText;
+        if (mapFilters.indexOf(zip) > -1) {
+          tr[i].style.display = "";
+        } 
+        else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+    else if (mapFilters.length == 0) {
+      for (i = 0; i < tr.length; i++) {
+        bType = tr[i].cells[0].innerText;
+        if (treemapFilters.indexOf(bType) > -1) {
+          tr[i].style.display = "";
+        } 
+        else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+    else {
+      for (i = 0; i < tr.length; i++) {
+        bType = tr[i].cells[0].innerText;
+        zip = tr[i].cells[3].innerText;
+        if (mapFilters.indexOf(zip) > -1 && treemapFilters.indexOf(bType) > -1) {
+          tr[i].style.display = "";
+        } 
+        else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  };
+
+tableD = createTable("data/member_data.csv", "All");
+
+
+
+
+

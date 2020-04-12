@@ -3,14 +3,17 @@ var margin = {top: 10, right: 10, bottom: 10, left: 10},
 width = 400 - margin.left - margin.right,
 height = 400 - margin.top - margin.bottom;
 
+var mouseDown = false;
+var mouseDownCell = new Array();
+
 // append the svg object to the body of the page
 var svg = d3.select("#vis-svg")
 .append("svg")
-.attr("width", width + margin.left + margin.right)
+.attr("width", 3.5 * width + margin.left + margin.right)
 .attr("height", height + margin.top + margin.bottom)
 .append("g")
 .attr("transform",
-  "translate(" + margin.left + "," + margin.top + ")");
+  "translate(" + 2.5 * width + "," + margin.top + ")");
 
 // Read data
 d3.csv('data/NewAggregatedMemberList.csv', function(data) {
@@ -32,10 +35,12 @@ d3.treemap()
 console.log(root.leaves())
 
 const toolTip = d3
-        .select("#vis-svg")
+        .select("#treemap-holder")
         .append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
+
+
 
 // use this information to add rectangles:
 const cell = svg.selectAll('g')
@@ -43,9 +48,7 @@ const cell = svg.selectAll('g')
             .enter()
             .append('g')
             .attr('transform', d => `translate(${d.x0},${d.y0})`)
-            .on('mousedown', function(d) {
-              console.log(d.data.name)
-            })
+            .on('mousedown', select)
             .on('mousemove', d => {
               toolTip.transition()
                       .duration(200)
@@ -75,6 +78,63 @@ const cell = svg.selectAll('g')
           .attr('height', d => d.y1 - d.y0)
           .attr('fill', d => { return color(d.data.name)});
 
+
+      function select() {
+        selectedType = d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name;
+        mapFilters = getMapFilters();
+        console.log(selectedType);
+
+        if (!mouseDown && mouseDownCell.length == 0) {
+          cell.selectAll(".selected").attr("class", "")
+          d3.select(this).attr("class", "mouseover selected");
+          d3.select(this).attr("fill", "white");
+          mouseDown = true;
+          mouseDownCell.push(selectedType);
+          console.log(mouseDownCell);
+          tableD = updateTableV2(mouseDownCell, mapFilters);
+          console.log(mouseDown);
+        }
+        else if (mouseDown && mouseDownCell.indexOf(selectedType) > -1) {
+          index = mouseDownCell.indexOf(selectedType);
+          if (index > -1) {
+            mouseDownCell.splice(index, 1);
+          }
+          if (mouseDownCell.length == 0) {
+            mouseDown = false;
+            mouseDownCell = new Array();
+            tableD = updateTableV2(mouseDownCell, mapFilters);
+            d3.select(this).attr("fill", "black");
+          }
+          else {
+            d3.select(this).attr("fill", "black");
+            tableD = updateTableV2(mouseDownCell, mapFilters);
+          }
+        }
+        else if (mouseDown && !(selectedType > -1)) {
+          d3.select(this).attr("fill", "white");
+          mouseDownCell.push(selectedType);
+          tableD = updateTableV2(mouseDownCell, mapFilters);
+        }
+        else {
+          cell.selectAll(".selected").attr("class", "");
+          d3.select(this).attr("class", "mouseover selected");
+          d3.select(this).attr("fill", "white");
+          mouseDown = true;
+          mouseDownCell = new Array().push(selectedType);
+          tableD = updateTableV2(mouseDownCell, mapFilters);
+          console.log(mouseDown);
+        }
+
+        if (mouseDown && mouseDownCell.length == 0) {
+          mouseDown = false;
+          mouseDownCell = new Array();
+        }
+      }
+
+      function deselect() {
+        mouseDown = false;
+      }
+
       cell.append('text')
           .selectAll('tspan')
           .each(function(d) {
@@ -99,7 +159,9 @@ const cell = svg.selectAll('g')
           .text(d => d);
           });
 
-          function norm2(x, y) { return x * x + y * y; }
-          color = d3.scaleOrdinal(d3.schemeCategory10)
+function norm2(x, y) { return x * x + y * y; }
+  color = d3.scaleOrdinal(d3.schemeCategory10)
           
-
+function getTreemapFilters() {
+  return mouseDownCell;
+}
