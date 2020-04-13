@@ -105,6 +105,7 @@ function createTable(data, filterValue) {
       }
     }
     else if (mapFilters.length == 0) {
+      console.log(updateTable);
       for (i = 0; i < tr.length; i++) {
         bType = tr[i].cells[0].innerText;
         if (treemapFilters.indexOf(bType) > -1) {
@@ -127,11 +128,24 @@ function createTable(data, filterValue) {
         }
       }
     }
+    updateColor(zipListDisplayed(), treemapFilters);
   };
 
 tableD = createTable("data/member_data.csv", "All");
 
+function zipListDisplayed() {
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tbody")[0].rows;
+  zipsDisplayed = new Array();
 
+  for (i = 0; i < tr.length; i++) {
+    zip = tr[i].cells[3].innerText;
+    if (tr[i].style.display == "" && zip != "" && zipsDisplayed.indexOf(zip) == -1) {
+      zipsDisplayed.push(zip);
+    } 
+  }
+  return zipsDisplayed;
+}
 
 
 
