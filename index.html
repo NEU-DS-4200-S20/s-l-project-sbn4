@@ -58,7 +58,7 @@
     
     <h1>Visualization</h1>
     
-    <p><em>Include the interactive visualization as part of this page. Static example follows.</em></p>
+    <p><em>Interactive Visualization</em></p>
     
   </div>
   
@@ -72,7 +72,8 @@
     <div class="treemap-holder" align="right" id="treemap"></div>
     <div class="table-holder" id="table"></div>
     </svg>
-    
+
+
   </div>
   
   <!-- Your writeup goes here -->
@@ -91,6 +92,33 @@
     <h1>Visualization explanation</h1>
     
     <p><em>Final visualization screenshots (PNG images), design justifications, UI walk-through, and linked presentation slides.</em></p>
+
+
+    <h2>Treemap</h2>
+    <img src="images/treemap.png" alt="treemap">
+    <p>The treemap serves as a demonstration of categories of services available from members of SBN. A user could click a specific area of interest to show businesses from that category, such as members involved within the legal services industry; the main map will then filter to show only businesses of that type, and the table will be filtered to show only this category of businesses.</p>
+
+    <h2>Geographical Map</h2>
+    <img src="images/map.png" alt="map">
+    <p>The geographical map of massachusets will allow the user to see the location of a vendor, if it has one. The map used is a map of MA centered around Greater Boston Area, since this is where the majority of SBN's members located.</p>
+    <p>Initially, location of all SBN members will be presented on the map. If the user select a category from the treemap, the locations where a vendor of that type is located in will be highlighted. If rows of the table is selected, location of those vendors will also be highlighted. This map will provide the user an impression of where the members of SBN are located.</p>
+
+    <h2>Table</h2>
+    <img src="images/table.png" alt="table">
+    <p>The scrollable table shows a detailed collection of all information for a vendor, including the specific product or service, the address and the zip code, the phone number as well as the website. The table will serve as a directory for users to visit or contact the vendor of their greatest interest. The user could also select rows of table in order to view the location of the vendors on the map.</p>
+
+    <h2>Static Example: Selecting all shops for one category</h2>
+    <img src="images/static_ex1.png" alt="static ex1">
+    <p>As the user click on a category (Light blue - Food Product for this case), areas with this category will be highlighted on the map, table will also be filtered to all vendors of this category.</p>
+
+    <h2>Static Example: Selecting shops for a location</h2>
+    <img src="images/static_ex2.png" alt="static ex2">
+    <p>If the user click on the map (the circled area), the table will be filtered and show members located at that area. The categories of members will also be hightlighted on the treemap.</p>
+
+
+    <h2>Static Example: Selecting shops from table</h2>
+    <img src="images/static_ex3.png" alt="static ex3">
+    <p>When the user select rows from the table, the locations of members selected will be highlighted on the map. This will allow the user to quickly get an impression of the members' geographical information.</p>
 
     <h1>Data Analysis</h1>
     <iframe src="https://docs.google.com/document/d/e/2PACX-1vSsMIoOZ4qGlQtdqAW05vQtOFdiRBk9yFE7_gF07nM2G3jv_xLOKjZNeSiFD0dhRJ3VIHM0C6YlE4X-/pub?embedded=true"></iframe>
@@ -114,8 +142,6 @@
 
     
     <h1>Acknowledgments</h1>
-
-    <p><em>List here where any code, packages/libraries, text, images, designs, etc. that you leverage come from.</em></p>
     
     <ul>
       <li><a href="https://d3js.org/">D3: Data-Driven Documents</a> by Mike Bostock.</li>
