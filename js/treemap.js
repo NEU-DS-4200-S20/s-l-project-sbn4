@@ -13,7 +13,7 @@ var svg = d3.select("#vis-svg")
 .attr("height", height + margin.top + margin.bottom)
 .append("g")
 .attr("transform",
-  "translate(" + 2.5 * width + "," + margin.top + ")");
+  "translate(" + 2.4 * width + "," + margin.top + ")");
 
 // Read data
 d3.csv('data/NewAggregatedMemberList.csv', function(data) {
