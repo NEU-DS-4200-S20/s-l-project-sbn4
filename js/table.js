@@ -31,7 +31,6 @@ function table() {
       // See https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table
   
       // YOUR CODE HERE
-      console.log(tbody);
   
       thead.append('tr')
           .selectAll('th')
@@ -62,8 +61,14 @@ function table() {
           .enter()
           .append("td")
             .html(function(d) {
-              if (d.column === 'Business/Organization Website') {
-                return "<a href="+ d.value +">" + d.value + "</a>"
+              if (d.column == 'Business/Organization Website') {
+                console.log("<a href="+ d.value +">" + d.value + "</a>");
+                if (!d.value.includes('http')) {
+                  var str = 'http://' + d.value
+                } else {
+                  var str = d.value
+                }
+                return "<a href="+ str +">" + str + "</a>"
               }
               return d.value;
       });
@@ -78,14 +83,12 @@ function table() {
   
       function highlight() {
         if (d3.select(this).attr("class") === "selected") {
-          console.log('highlight - true');
           d3.select(this).attr("class", "");
           d3.select(this).attr("class", "selected");
           highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
           highlightedBTypes.push(d3.select(this)._groups[0][0].cells[0].innerText);
           updateColor(highlightedZips, highlightedBTypes);
         } else {
-          console.log('highlight - false');
           d3.select(this).attr("class", "mouseover");
         }
       }
@@ -94,14 +97,12 @@ function table() {
         
         if (d3.select(this).attr("class") === "selected"
           || d3.select(this).attr("class") === "mouseover selected") {
-            console.log('unhighlight - true');
           d3.select(this).attr("class", "");
           d3.select(this).attr("class", "selected");
           highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
           highlightedBTypes.push(d3.select(this)._groups[0][0].cells[0].innerText);
           updateColor(highlightedZips, highlightedBTypes);
         } else {
-          console.log('unhighlight - false');
           d3.select(this).attr("class", "");
         }
       }
@@ -112,7 +113,6 @@ function table() {
         if (!mouseDown) {
           table.selectAll(".selected").attr("class", "")
           dispatcher.call(dispatchString, this, []);
-          console.log('not down');
           highlightedBTypes = new Array();
           highlightedZips = new Array();
         }
