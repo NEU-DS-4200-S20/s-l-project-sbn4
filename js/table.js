@@ -61,8 +61,14 @@ function table() {
           })
           .enter()
           .append("td")
-            .text(function(d) { return d.value;});
-  
+            .html(function(d) {
+              if (d.column === 'Business/Organization Website') {
+                return "<a href="+ d.value +">" + d.value + "</a>"
+              }
+              return d.value;
+      });
+
+
       var mouseDown = false;
       rows.on("mouseover", highlight);
       rows.on("mouseout", unhighlight);
