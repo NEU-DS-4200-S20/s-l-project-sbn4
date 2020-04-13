@@ -1,4 +1,6 @@
 /* global D3 */
+var highlightedBTypes = new Array();
+var highlightedZips = new Array();
 
 function table() {
 
@@ -70,33 +72,53 @@ function table() {
   
       function highlight() {
         if (d3.select(this).attr("class") === "selected") {
+          console.log('highlight - true');
           d3.select(this).attr("class", "");
           d3.select(this).attr("class", "selected");
+          highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
+          highlightedBTypes.push(d3.select(this)._groups[0][0].cells[0].innerText);
+          updateColor(highlightedZips, highlightedBTypes);
         } else {
+          console.log('highlight - false');
           d3.select(this).attr("class", "mouseover");
         }
       }
   
       function unhighlight() {
+        
         if (d3.select(this).attr("class") === "selected"
           || d3.select(this).attr("class") === "mouseover selected") {
+            console.log('unhighlight - true');
           d3.select(this).attr("class", "");
           d3.select(this).attr("class", "selected");
+          highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
+          highlightedBTypes.push(d3.select(this)._groups[0][0].cells[0].innerText);
+          updateColor(highlightedZips, highlightedBTypes);
         } else {
+          console.log('unhighlight - false');
           d3.select(this).attr("class", "");
         }
       }
   
       function select() {
         let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
+
         if (!mouseDown) {
           table.selectAll(".selected").attr("class", "")
           dispatcher.call(dispatchString, this, []);
+          console.log('not down');
+          highlightedBTypes = new Array();
+          highlightedZips = new Array();
         }
         d3.select(this).attr("class", "mouseover selected");
         dispatcher.call(dispatchString, this, table.selectAll(".selected").data());
+        highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
+        highlightedBTypes.push(d3.select(this)._groups[0][0].cells[0].innerText);
+        updateColor(highlightedZips, highlightedBTypes);
         mouseDown = true;
-        console.log(d3.select(this).attr("class", "mouseover selected"))
+        
+        highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
+       
       }
   
       function shadow() {
@@ -104,6 +126,9 @@ function table() {
           d3.select(this).attr("class", "mouseover selected");
             let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
             dispatcher.call(dispatchString, this, table.selectAll(".selected").data());
+        }
+        else {
+          hover(highlightedZips, highlightedBTypes, d3.select(this)._groups[0][0].cells[3].innerText)
         }
       }
   
