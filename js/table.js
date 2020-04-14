@@ -88,6 +88,7 @@ function table() {
           highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
           highlightedBTypes.push(d3.select(this)._groups[0][0].cells[0].innerText);
           updateColor(highlightedZips, highlightedBTypes);
+          updateTreemap(highlightedBTypes);
         } else {
           d3.select(this).attr("class", "mouseover");
         }
@@ -102,6 +103,7 @@ function table() {
           highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
           highlightedBTypes.push(d3.select(this)._groups[0][0].cells[0].innerText);
           updateColor(highlightedZips, highlightedBTypes);
+          updateTreemap(highlightedBTypes);
         } else {
           d3.select(this).attr("class", "");
         }
@@ -121,6 +123,7 @@ function table() {
         highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);
         highlightedBTypes.push(d3.select(this)._groups[0][0].cells[0].innerText);
         updateColor(highlightedZips, highlightedBTypes);
+        updateTreemap(highlightedBTypes);
         mouseDown = true;
         
         highlightedZips.push(d3.select(this)._groups[0][0].cells[3].innerText);

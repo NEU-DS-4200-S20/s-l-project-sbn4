@@ -128,6 +128,7 @@ function createTable(data, filterValue) {
         }
       }
     }
+    updateTreemap(btypeListDisplayed());
     updateColor(zipListDisplayed(), treemapFilters);
   };
 
@@ -147,5 +148,18 @@ function zipListDisplayed() {
   return zipsDisplayed;
 }
 
+function btypeListDisplayed() {
+  table = document.getElementById("table");
+  tr = table.getElementsByTagName("tbody")[0].rows;
+  btypesDisplayed = new Array();
+
+  for (i = 0; i < tr.length; i++) {
+    btype = tr[i].cells[0].innerText;
+    if (tr[i].style.display == "" && btype != "" && btypesDisplayed.indexOf(btype) == -1) {
+      btypesDisplayed.push(btype);
+    } 
+  }
+  return btypesDisplayed;
+}
 
 

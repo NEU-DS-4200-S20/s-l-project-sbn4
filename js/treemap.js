@@ -172,3 +172,37 @@ function norm2(x, y) { return x * x + y * y; }
 function getTreemapFilters() {
   return mouseDownCell;
 }
+
+function updateTreemap(treemapFilters) {
+  if (treemapFilters.length == 16) {
+    treemapFilters = new Array();
+  }
+  d3.selectAll("rect")
+        .transition()
+        .duration(2000)
+        .style("stroke", function(d) { return determineStrokeOrWidth(d, treemapFilters, false)})
+        .style("stroke-width", function(d) { return determineStrokeOrWidth(d, treemapFilters, true)});
+};
+
+function determineStrokeOrWidth(d, treemapFilters, widthHuh) {
+  console.log(d);
+  btype = d.data.name
+  console.log(btype);
+  if (treemapFilters.indexOf(btype) > -1) {
+    if (widthHuh) {
+      console.log(treemapFilters);
+      return 4;
+    }
+    else {
+      return "black";
+    }
+  }
+  else {
+    if (widthHuh) {
+      return 0;
+    }
+    else {
+      return determineColor(btype);
+    }
+  }
+}
