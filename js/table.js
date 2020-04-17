@@ -139,7 +139,7 @@ function table() {
             dispatcher.call(dispatchString, this, table.selectAll(".selected").data());
         }
         else {
-          hover(zipListDisplayed(), btypeListDisplayed(), d3.select(this)._groups[0][0].cells[3].innerText)
+          //hover(zipListDisplayed(), btypeListDisplayed(), d3.select(this)._groups[0][0].cells[3].innerText)
         }
       }
   
