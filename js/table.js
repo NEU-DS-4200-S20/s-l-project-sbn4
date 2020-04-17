@@ -62,7 +62,6 @@ function table() {
           .append("td")
             .html(function(d) {
               if (d.column == 'Business/Organization Website') {
-                console.log("<a href="+ d.value +">" + d.value + "</a>");
                 if (!d.value.includes('http')) {
                   var str = 'http://' + d.value
                 } else {
@@ -81,6 +80,7 @@ function table() {
       rows.on("mousemove", shadow);
       rows.on("mouseup", deselect);
   
+      // highlight rows
       function highlight() {
         if (d3.select(this).attr("class") === "selected") {
           d3.select(this).attr("class", "");
@@ -93,7 +93,8 @@ function table() {
           d3.select(this).attr("class", "mouseover");
         }
       }
-  
+      
+      //unhighlight rows
       function unhighlight() {
         
         if (d3.select(this).attr("class") === "selected"
@@ -108,7 +109,8 @@ function table() {
           d3.select(this).attr("class", "");
         }
       }
-  
+      
+      // highlight rows and dispath selections
       function select() {
         let dispatchString = Object.getOwnPropertyNames(dispatcher._)[0];
 
@@ -137,7 +139,7 @@ function table() {
             dispatcher.call(dispatchString, this, table.selectAll(".selected").data());
         }
         else {
-          hover(highlightedZips, highlightedBTypes, d3.select(this)._groups[0][0].cells[3].innerText)
+          hover(zipListDisplayed(), btypeListDisplayed(), d3.select(this)._groups[0][0].cells[3].innerText)
         }
       }
   

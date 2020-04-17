@@ -32,7 +32,6 @@ d3.treemap()
 .padding(4)
 (root)
 
-console.log(root.leaves())
 
 const toolTip = d3
         .select("#treemap-holder")
@@ -67,7 +66,7 @@ const cell = svg.selectAll('g')
                       .style('opacity', 0);
             });
 
-
+      // creates treemap cells
       cell.append('rect')
           .attr('id', d => d.data.id)
           .attr('class', 'tile')
@@ -76,17 +75,19 @@ const cell = svg.selectAll('g')
           .attr('data-category', d => d.data.category)
           .attr('width', d => d.x1 - d.x0)
           .attr('height', d => d.y1 - d.y0)
-          .attr('fill', d => { return determineColor(d.data.name)});
+          .attr('fill', d => { return determineColor(d.data.name)})
+          .style("stroke", "black")
+          .style("stroke-width", 0);
           
 
-
+      // on mouse event select and filter 
       function select() {
         selectedType = d3.select(this).attr("class", "mouseover selected")._groups[0][0].getElementsByClassName("tile")[0].dataset.name;
         mapFilters = getMapFilters();
 
         if (!mouseDown && mouseDownCell.length == 0) {
           d3.select(this).select("rect")._groups[0][0].style.stroke = "black";
-          console.log(this);
+          
           d3.select(this).select("rect")._groups[0][0].style.strokeWidth = 3;
           mouseDown = true;
           mouseDownCell.push(selectedType);
@@ -129,38 +130,14 @@ const cell = svg.selectAll('g')
           mouseDownCell = new Array();
         }
       }
-
-      /*
-      cell.append('text')
-          .selectAll('tspan')
-          .each(function(d) {
-            var rect,
-                r2 = d.r * d.r,
-                s = d.r * 2,
-                t = d3.select(this);
-            do {
-              t.style("font-size", s-- + "px");
-              rect = this.getBBox();
-            } while (norm2(rect.x, rect.y) > r2
-              || norm2(rect.x + rect.width, rect.y) > r2
-              || norm2(rect.x + rect.width, rect.y + rect.height) > r2
-              || norm2(rect.x, rect.y + rect.height) > r2);
-          })
-          .data(d => d.data.name.split(/(?=[A-Z][^A-Z])/g))
-          .enter()
-          .append('tspan')
-          .attr("font-size", "5px")
-          .attr('x', 4)
-          .attr('y', (d, i) => 8 + 10*i)
-          .text(d => d);
-           */
         });
 function norm2(x, y) { return x * x + y * y; }
 
-  
+  // business type and respective colors for legend and treemap
   btypes = ['Financial Service', 'Consulting', 'Health Service', 'Restaurant/Cafe', 'Caterer', 'Food Delivery Service', 'Energy and Utilities', 'Legal Service', 'Marketing', 'Fresh Food Producer', 'Food Product', 'Food Product - Beverage', 'Hotel/Housing', 'Consumer Service', 'Consumer Product', 'Commercial Service'];
   colors = ['#008000', '#00FF00', '#FF0000', '#FF8C00', '#FF6347', '#8B0000', '#FFFF00', '#000000', '#FF00FF', '#87CEFA', '#00BFFF', '#0000CD', '#8B008B', '#008080', '#FFC0CB', '#D3D3D3'];
 
+  // determines color fo business type
   function determineColor(name) {
     for (i = 0; i < btypes.length; i++) {
       if (btypes[i] == name) {
@@ -168,11 +145,13 @@ function norm2(x, y) { return x * x + y * y; }
       }
     }
   };
-          
+   
+// return treemap filters
 function getTreemapFilters() {
   return mouseDownCell;
 }
 
+// updates treemap for selection by updating their outline
 function updateTreemap(treemapFilters) {
   if (treemapFilters.length == 16) {
     treemapFilters = new Array();
@@ -184,13 +163,11 @@ function updateTreemap(treemapFilters) {
         .style("stroke-width", function(d) { return determineStrokeOrWidth(d, treemapFilters, true)});
 };
 
+// determines the color and stroke of treemap outline according to inputted filters
 function determineStrokeOrWidth(d, treemapFilters, widthHuh) {
-  console.log(d);
   btype = d.data.name
-  console.log(btype);
   if (treemapFilters.indexOf(btype) > -1) {
     if (widthHuh) {
-      console.log(treemapFilters);
       return 4;
     }
     else {

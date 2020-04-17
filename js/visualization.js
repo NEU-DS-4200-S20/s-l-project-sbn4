@@ -77,14 +77,8 @@ function createTable(data, filterValue) {
     });
   };
 
-  function updateTable(table, name) {
-    const dispatchString = "selectionUpdated";
-    return createTable("data/Member_Data.csv", name);
-  };
-
+  // function to update table and then update map and treemap
   function updateTableV2(treemapFilters, mapFilters) {
-    const dispatchString = "selectionUpdated";
-    
     table = document.getElementById("table");
     tr = table.getElementsByTagName("tbody")[0].rows;
 
@@ -105,7 +99,6 @@ function createTable(data, filterValue) {
       }
     }
     else if (mapFilters.length == 0) {
-      console.log(updateTable);
       for (i = 0; i < tr.length; i++) {
         bType = tr[i].cells[0].innerText;
         if (treemapFilters.indexOf(bType) > -1) {
@@ -132,8 +125,10 @@ function createTable(data, filterValue) {
     updateColor(zipListDisplayed(), treemapFilters);
   };
 
+  // creates initial table
 tableD = createTable("data/member_data.csv", "All");
 
+// returns distinct ziplists displayed within the table
 function zipListDisplayed() {
   table = document.getElementById("table");
   tr = table.getElementsByTagName("tbody")[0].rows;
@@ -148,6 +143,8 @@ function zipListDisplayed() {
   return zipsDisplayed;
 }
 
+
+// returns distinct business types displayed on the table
 function btypeListDisplayed() {
   table = document.getElementById("table");
   tr = table.getElementsByTagName("tbody")[0].rows;
