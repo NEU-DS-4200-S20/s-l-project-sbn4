@@ -135,7 +135,7 @@ function norm2(x, y) { return x * x + y * y; }
 
   // business type and respective colors for legend and treemap
   btypes = ['Financial Service', 'Consulting', 'Health Service', 'Restaurant/Cafe', 'Caterer', 'Food Delivery Service', 'Energy and Utilities', 'Legal Service', 'Marketing', 'Fresh Food Producer', 'Food Product', 'Food Product - Beverage', 'Hotel/Housing', 'Consumer Service', 'Consumer Product', 'Commercial Service'];
-  colors = ['#008000', '#00FF00', '#FF0000', '#FF8C00', '#FF6347', '#8B0000', '#FFFF00', '#000000', '#FF00FF', '#87CEFA', '#00BFFF', '#0000CD', '#8B008B', '#008080', '#FFC0CB', '#D3D3D3'];
+  colors = ['#008000', '#00FF00', '#FF0000', '#FF8C00', '#FF6347', '#8B0000', '#FFFF00', '#A69509', '#FF00FF', '#87CEFA', '#00BFFF', '#0000CD', '#8B008B', '#008080', '#FFC0CB', '#D3D3D3'];
 
   // determines color fo business type
   function determineColor(name) {
